@@ -1,3 +1,5 @@
 ro.adb.secure=0
 ro.vendor.mediatek.platform=MT6889
-ro.product.product.device=RMX2121
+ro.product.product.device=RMX2121CN
+ro.separate.soft=20601
+ro.commonsoft.ota=RMX2121CN
