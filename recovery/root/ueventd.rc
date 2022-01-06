@@ -33,7 +33,7 @@ subsystem sound
 /dev/urandom              0666   root       root
 # Make HW RNG readable by group system to let EntropyMixer read it.
 /dev/hw_random            0440   root       system
-/dev/ashmem               0666   root       root
+/dev/ashmem*              0666   root       root
 /dev/binder               0666   root       root
 /dev/hwbinder             0666   root       root
 /dev/vndbinder            0666   root       root
@@ -59,6 +59,12 @@ subsystem sound
 
 # CDMA radio interface MUX
 /dev/ppp                  0660   radio      vpn
+
+#ifdef OPLUS_FEATURE_STORAGE_TOOL
+#Xuweijie1@BSP.Storage , 20200601. add for Memory Monitor
+/dev/sg3         0600   system     system
+#/dev/block/mmcblk0p1 0600   system     system
+#endif /* OPLUS_FEATURE_STORAGE_TOOL */
 
 # sysfs properties
 /sys/devices/platform/trusty.*      trusty_version        0440  root   log
