@@ -142,9 +142,9 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
 
 # TWRP specific build flags
 TW_THEME := portrait_hdpi
-TW_INTERNAL_STORAGE_PATH := /data/media
-TW_INTERNAL_STORAGE_MOUNT_POINT := data
-#RECOVERY_SDCARD_ON_DATA := true
+#TW_INTERNAL_STORAGE_PATH := /data/media
+#TW_INTERNAL_STORAGE_MOUNT_POINT := data
+RECOVERY_SDCARD_ON_DATA := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
 TW_EXTRA_LANGUAGES := true
@@ -159,7 +159,7 @@ TW_H_OFFSET := -115
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
 TW_OZIP_DECRYPT_KEY := 0000
-TW_INCLUDE_LOGICAL := my_product my_engineering my_company my_carrier my_region my_heytap my_stock my_preload my_manifest
+TW_INCLUDE_LOGICAL := my_product my_engineering my_company my_carrier my_region my_heytap my_stock my_preload my_manifest my_bigball my_version
 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
@@ -170,5 +170,5 @@ TWRP_INCLUDE_LOGCAT := true
 TARGET_USES_LOGD := true
 
 # PBRP specific build flags
-PB_DISABLE_DEFAULT_TREBLE_COMP := true
-PB_TORCH_PATH := "/sys/class/flashlight"
+#PB_DISABLE_DEFAULT_TREBLE_COMP := true
+#PB_TORCH_PATH := "/sys/class/flashlight"
