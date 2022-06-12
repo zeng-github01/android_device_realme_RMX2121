@@ -1,4 +1,5 @@
 import /tee.rc
+import /trustonic.rc
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
@@ -59,7 +60,7 @@ service hal_cryptoeng_oppo /system/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-se
     disabled
     seclabel u:r:recovery:s0
 
-service keymaster-4-0 /system/bin/android.hardware.keymaster@4.0-service.trustonic
+service keymaster-4-1 /system/bin/android.hardware.keymaster@4.1-service.trustonic
     user root
     group root drmrpc
     disabled
@@ -74,13 +75,13 @@ service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
 on property:hwservicemanager.ready=true
     start hal_cryptoeng_oppo
     start mobicore
-    start keymaster-4-0
+    start keymaster-4-1
     start gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
     stop mobicore
     stop hal_cryptoeng_oppo
-    stop keymaster-4-0
+    stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
@@ -88,7 +89,7 @@ on property:ro.crypto.state=unsupported
 on property:ro.crypto.state=unencrypted
     stop mobicore
     stop hal_cryptoeng_oppo
-    stop keymaster-4-0
+    stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
@@ -96,7 +97,7 @@ on property:ro.crypto.state=unencrypted
 on property:twrp.decrypt.done=true
     stop mobicore
     stop hal_cryptoeng_oppo
-    stop keymaster-4-0
+    stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
