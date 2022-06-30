@@ -85,14 +85,12 @@ service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     seclabel u:r:recovery:s0
 
 on property:hwservicemanager.ready=true
-    start hal_cryptoeng_oppo
     start mobicore
     start keymaster-4-1
     start gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
     stop mobicore
-    stop hal_cryptoeng_oppo
     stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
@@ -100,7 +98,6 @@ on property:ro.crypto.state=unsupported
 
 on property:ro.crypto.state=unencrypted
     stop mobicore
-    stop hal_cryptoeng_oppo
     stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
@@ -108,7 +105,6 @@ on property:ro.crypto.state=unencrypted
 
 on property:twrp.decrypt.done=true
     stop mobicore
-    stop hal_cryptoeng_oppo
     stop keymaster-4-1
     stop gatekeeper-1-0
     stop servicemanager
