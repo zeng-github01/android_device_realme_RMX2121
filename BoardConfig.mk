@@ -18,6 +18,8 @@
 
 DEVICE_PATH := device/realme/RMX2121
 
+ALLOW_MISSING_DEPENDENCIES := true
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-2a
