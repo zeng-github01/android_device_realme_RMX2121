@@ -12,7 +12,9 @@ my_carrier /my_carrier ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
 my_region /my_region ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
 my_heytap /my_heytap ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
 my_stock /my_stock ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
-my_preload /my_preload ext4 ro wait,logical,first_stage_mount,nofail
+my_preload /my_preload ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
+my_bigball /my_bigball ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
+my_manifest /my_manifest ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
 
 # Misc
 /dev/block/by-name/cdt_engineering /cdt_engineering emmc defaults defaults
@@ -37,7 +39,7 @@ my_preload /my_preload ext4 ro wait,logical,first_stage_mount,nofail
 /dev/block/by-name/boot_para /boot_para emmc defaults defaults
 /dev/block/by-name/dtbo /dtbo emmc defaults defaults
 /dev/block/by-name/odm /custom ext4 ro wait,verify,recoveryonly
-/dev/block/sdd1 /usb_otg vfat nosuid,nodev defaults
+#/dev/block/sdd1 /usb_otg vfat nosuid,nodev defaults
 /dev/block/by-name/vbmeta /vbmeta emmc defaults defaults
 /dev/block/by-name/reserve2            /reserve2       emmc    defaults                                                      defaults
 /dev/block/by-name/opporeserve2                            /opporeserve    ext4    rw,seclabel,nosuid,nodev,noatime,data=ordered                 wait
