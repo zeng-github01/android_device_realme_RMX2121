@@ -21,7 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
-# Inherit from our custom product configuration
+# Inherit from twrp custom product configuration
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 PRODUCT_DEVICE := RMX2121
@@ -44,6 +44,10 @@ PRODUCT_PACKAGES += \
 # keystore2
 PRODUCT_PACKAGES += \
     android.system.keystore2
+
+# Gatekeeper
+PRODUCT_PACKAGES += \
+    android.hardware.gatekeeper@1.0.vendor
 
 # HACK: Set vendor patch level
 PRODUCT_PROPERTY_OVERRIDES += \
