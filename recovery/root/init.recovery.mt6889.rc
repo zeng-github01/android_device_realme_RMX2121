@@ -3,7 +3,7 @@ import /trustonic.rc
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    start boot-1-1
+
 
 on fs
     install_keyring
@@ -23,6 +23,7 @@ on late-fs
     mount_all /vendor/etc/fstab.mt6889 --late
 
 on post-fs
+    start boot-1-1
 
 service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     class main
