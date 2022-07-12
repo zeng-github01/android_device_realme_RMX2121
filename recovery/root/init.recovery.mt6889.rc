@@ -100,6 +100,11 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
+service vendor.keymint-beanpod /vendor/bin/hw/android.hardware.security.keymint@1.0-service.beanpod
+    class early_hal
+    user nobody
+    seclabel u:r:recovery:s0
+
 on property:hwservicemanager.ready=true
     start mobicore
     start keymaster-4-1
