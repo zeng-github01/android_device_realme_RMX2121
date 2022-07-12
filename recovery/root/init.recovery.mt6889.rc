@@ -11,8 +11,15 @@ on fs
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
-on post-fs
+# We need vold early for metadata encryption
+on early-fs
+    start vold
 
+on late-fs
+    # Wait for keymaster
+    exec_start wait_for_keymaster
+
+on post-fs
 
 service keystore_auth /system/bin/keystore_auth
     oneshot
@@ -68,19 +75,6 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
     disabled
     seclabel u:r:recovery:s0
 
-service boot-1-0 /system/lib64/android.hardware.boot@1.0-service
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-service boot-1-1 /system/lib64/android.hardware.boot@1.1-service
-    user root
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
-
 service keymaster-4-1 /system/bin/android.hardware.keymaster@4.1-service.trustonic
     user root
     group root drmrpc
@@ -91,6 +85,13 @@ service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     user root
     group root
     disabled
+    seclabel u:r:recovery:s0
+
+service wait_for_keymaster /system/bin/wait_for_keymaster
+    user root
+    group root system
+    priority -20
+    ioprio rt 0
     seclabel u:r:recovery:s0
 
 on property:hwservicemanager.ready=true

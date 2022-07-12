@@ -21,8 +21,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 
-# Inherit from twrp custom product configuration
+# Inherit from our custom product configuration
 $(call inherit-product, vendor/twrp/config/common.mk)
+
+# Device specific configs.
+$(call inherit-product, device/realme/RMX2121/device.mk)
 
 PRODUCT_DEVICE := RMX2121
 PRODUCT_NAME := twrp_RMX2121
@@ -31,24 +34,3 @@ PRODUCT_MODEL := Realme X7 Pro
 PRODUCT_MANUFACTURER := Realme
 
 PRODUCT_BUILD_PROP_OVERRIDES += PRODUCT_DEVICE="RMX2121CN"
-
-# Dynamic
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-
-# fastbootd
-PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.0-impl-mock \
-    android.hardware.fastboot@1.0-impl-mock.recovery \
-    fastbootd
-
-# keystore2
-PRODUCT_PACKAGES += \
-    android.system.keystore2
-
-# Gatekeeper
-PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0.vendor
-
-# HACK: Set vendor patch level
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.build.security_patch=2099-12-31 
