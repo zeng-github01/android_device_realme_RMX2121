@@ -46,6 +46,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.4
 
+# Build MT-PL-Utils
+PRODUCT_PACKAGES += \
+    mtk_plpath_utils \
+    mtk_plpath_utils.recovery
+
 
 # HACK: Set vendor patch level
 PRODUCT_PROPERTY_OVERRIDES += \

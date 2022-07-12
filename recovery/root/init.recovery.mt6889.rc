@@ -24,6 +24,15 @@ on late-fs
 
 on post-fs
 
+service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
+    class main
+    user root
+    group root system
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
+
+
 service keystore_auth /system/bin/keystore_auth
     oneshot
     user system
