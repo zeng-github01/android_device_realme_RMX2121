@@ -100,22 +100,15 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
-service vendor.keymint-beanpod /vendor/bin/hw/android.hardware.security.keymint@1.0-service.beanpod
-    class early_hal
-    user nobody
-    seclabel u:r:recovery:s0
-
 on property:hwservicemanager.ready=true
     start mobicore
     start keymaster-4-1
     start vendor.gatekeeper-1-0
-    start vendor.keymint-beanpod
 
 on property:ro.crypto.state=unsupported
     stop mobicore
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
-    stop vendor.keymint-beanpod
     stop servicemanager
     stop hwservicemanager
 
@@ -123,7 +116,6 @@ on property:ro.crypto.state=unencrypted
     stop mobicore
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
-    stop vendor.keymint-beanpod
     stop servicemanager
     stop hwservicemanager
 
@@ -131,7 +123,6 @@ on property:twrp.decrypt.done=true
     stop mobicore
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
-    stop vendor.keymint-beanpod
     stop servicemanager
     stop hwservicemanager
 

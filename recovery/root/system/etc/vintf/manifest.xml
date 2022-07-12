@@ -108,13 +108,6 @@
         </interface>
         <fqname>@1.0::IOrmsHalProxy/ORMS_HAL_PROXY</fqname>
     </hal>
-    <hal format="aidl">
-        <name>android.system.keystore2</name>
-        <interface>
-            <name>IKeystoreService</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
     <system-sdk>
         <version>28</version>
         <version>29</version>

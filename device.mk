@@ -51,13 +51,6 @@ PRODUCT_PACKAGES += \
     mtk_plpath_utils \
     mtk_plpath_utils.recovery
 
-# Keymint
-PRODUCT_PACKAGES += \
-    android.hardware.security.keymint \
-    android.hardware.security.secureclock \
-    android.hardware.security.sharedsecret
-
-
 
 # HACK: Set vendor patch level
 PRODUCT_PROPERTY_OVERRIDES += \
