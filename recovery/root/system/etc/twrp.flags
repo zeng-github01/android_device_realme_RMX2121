@@ -9,7 +9,7 @@
 /dtbo             emmc    /dev/block/by-name/dtbo                     flags=backup=1;display="DTBO";flashimg=1
 /recovery         emmc    /dev/block/by-name/recovery                 flags=backup=1;display="Recovery"
 /vbmeta           emmc    /dev/block/by-name/vbmeta                   flags=backup=1;display="VBMeta";flashimg=1
-/data             ext4    /dev/block/by-name/userdata                 flags=fileencryption=aes-256-xts:aes-256-cts
+/data             ext4    /dev/block/by-name/userdata                 flags=fileencryption=aes-256-xts:aes-256-cts,keydirectory=/metadata/vold/metadata_encryption
 
 # MediaTek partition
 /protect_f        ext4    /dev/block/by-name/protect1                 flags=display="Protect_F";backup=1;
