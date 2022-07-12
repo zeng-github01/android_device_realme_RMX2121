@@ -39,7 +39,7 @@ my_manifest /my_manifest ext4 ro,barrier=1 wait,logical,first_stage_mount,nofail
 /dev/block/by-name/boot_para /boot_para emmc defaults defaults
 /dev/block/by-name/dtbo /dtbo emmc defaults defaults
 /dev/block/by-name/odm /custom ext4 ro wait,verify,recoveryonly
-#/dev/block/sdd1 /usb_otg vfat nosuid,nodev defaults
 /dev/block/by-name/vbmeta /vbmeta emmc defaults defaults
 /dev/block/by-name/reserve2            /reserve2       emmc    defaults                                                      defaults
 /dev/block/by-name/opporeserve2                            /opporeserve    ext4    rw,seclabel,nosuid,nodev,noatime,data=ordered                 wait
+/dev/block/by-name/md_udc /metadata ext4 noatime,nosuid,nodev,discard wait,check,formattable,first_stage_mount
