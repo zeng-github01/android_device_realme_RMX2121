@@ -132,3 +132,7 @@ on post-fs-data
     mkdir /data/vendor_de 0770 system system
     mkdir /data/vendor_de/0 0770 system system
     mkdir /data/vendor_de/0/cryptoeng 0770 system system
+
+on boot
+    start health-hal-2-1
+    setprop sys.usb.config adb
