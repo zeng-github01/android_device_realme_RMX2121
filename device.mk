@@ -43,10 +43,15 @@ PRODUCT_PACKAGES += \
     mtk_plpath_utils \
     mtk_plpath_utils.recovery
 
+# Keymint
 PRODUCT_PACKAGES += \
     android.hardware.security.keymint \
     android.hardware.security.secureclock \
     android.hardware.security.sharedsecret
+
+# Keystore
+PRODUCT_PACKAGES += \
+    android.system.keystore2
 
 
 # HACK: Set vendor patch level
