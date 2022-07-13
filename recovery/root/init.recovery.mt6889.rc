@@ -34,10 +34,10 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     seclabel u:r:recovery:s0
 
 
-service keystore2 /system/bin/keystore2 /data/misc/keystore
-    class early_hal
-    user keystore
-    group keystore readproc log
+service keystore /system/bin/keystore /tmp/misc/keystore
+    user root
+    group root drmrpc readproc log
+    disabled
     seclabel u:r:recovery:s0
 
 # Start Daemon (Registry directories should already be present)
@@ -109,12 +109,14 @@ service hal_cryptoeng_oppo /system/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-se
 on property:hwservicemanager.ready=true
     start hal_cryptoeng_oppo
     start mobicore
+    start keystore2
     start keymaster-4-1
     start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
     stop hal_cryptoeng_oppo
     stop mobicore
+    stop keystore2
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
     stop servicemanager
@@ -123,6 +125,7 @@ on property:ro.crypto.state=unsupported
 on property:ro.crypto.state=unencrypted
     stop hal_cryptoeng_oppo
     stop mobicore
+    stop keystore2
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
     stop servicemanager
@@ -131,16 +134,20 @@ on property:ro.crypto.state=unencrypted
 on property:ro.crypto.state=encrypted
     stop mobicore
     stop hal_cryptoeng_oppo
+    stop keystore2
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
     start hal_cryptoeng_oppo
     start mobicore
+    start keystore2
     start keymaster-4-1
     start vendor.gatekeeper-1-0
+    
 
 on property:twrp.decrypt.done=true
     stop hal_cryptoeng_oppo
     stop mobicore
+    stop keystore2
     stop keymaster-4-1
     stop vendor.gatekeeper-1-0
     stop servicemanager
