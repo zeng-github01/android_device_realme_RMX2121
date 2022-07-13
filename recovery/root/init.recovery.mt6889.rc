@@ -3,6 +3,8 @@ import /trustonic.rc
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
+    start hwservicemanager
+    setprop crypto.ready 1
 
 
 on fs
@@ -41,7 +43,7 @@ service keystore2 /system/bin/keystore2 /data/misc/keystore
     seclabel u:r:recovery:s0
 
 # Start Daemon (Registry directories should already be present)
-service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry \
+service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/persist/mcRegistry \
     -r /vendor/app/mcRegistry/06090000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/020f0000000000000000000000000000.drbin \
 	-r /vendor/app/mcRegistry/05120000000000000000000000000000.drbin \
@@ -78,10 +80,13 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
 	-r /vendor/app/mcRegistry/5020170115e016302017012521300000.drbin
     user root
     group root
+    class core
+    priority -20
     disabled
     seclabel u:r:recovery:s0
 
-service keymaster-4-1 /system/bin/android.hardware.keymaster@4.1-service.trustonic
+service vendor.vendor.keymaster-4-1-trustonic /system/bin/android.hardware.keymaster@4.1-service.trustonic
+    class early_hal
     user root
     group root drmrpc
     disabled
@@ -102,53 +107,53 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
-service hal_cryptoeng_oppo /system/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+service hwservicemanager /system/bin/hwservicemanager
     user root
-    group root input sdcard_rw sdcard_r
+    group root
+    disabled
+    onrestart setprop hwservicemanager.ready false
+    seclabel u:r:recovery:s0
+    
+service servicemanager /system/bin/servicemanager
+    user root
+    group root readproc
     disabled
     seclabel u:r:recovery:s0
 
+on property:crypto.ready=1
+    start vendor.vendor.keymaster-4-1-trustonic
+
 on property:hwservicemanager.ready=true
-    start hal_cryptoeng_oppo
     start mobicore
-    start keymaster-4-1
+    start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
-    stop hal_cryptoeng_oppo
     stop mobicore
-    stop keymaster-4-1
+    stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
-    stop servicemanager
-    stop hwservicemanager
 
 on property:ro.crypto.state=unencrypted
-    stop hal_cryptoeng_oppo
     stop mobicore
-    stop keymaster-4-1
+    stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
-    stop servicemanager
-    stop hwservicemanager
 
 on property:ro.crypto.state=encrypted
     stop mobicore
-    stop hal_cryptoeng_oppo
-    stop keymaster-4-1
+    stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
-    start hal_cryptoeng_oppo
-    start mobicore
-    start keystore2
-    start keymaster-4-1
-    start vendor.gatekeeper-1-0
     
 
 on property:twrp.decrypt.done=true
-    stop hal_cryptoeng_oppo
     stop mobicore
-    stop keymaster-4-1
+    stop vendor.keymaster-4-1-trustonic
+    stop vendor.gatekeeper-1-0
+
+on property:crypto.ready=0
+    stop mobicore
+    stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
     stop servicemanager
-    stop hwservicemanager
 
 on property:sys.usb.config=fastboot
     start servicemanager
@@ -162,4 +167,5 @@ on post-fs-data
 
 on boot
     start health-hal-2-1
+    start mtk.plpath.utils.link
     setprop sys.usb.config adb
