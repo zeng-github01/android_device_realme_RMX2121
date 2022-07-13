@@ -1,6 +1,6 @@
 # TWRP device tree for Realme X7 Pro
  This device tree has been stop developing
-# Satus
+# Status
 Working:fastbootd
         adb
         otg
