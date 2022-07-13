@@ -127,6 +127,8 @@ PLATFORM_SECURITY_PATCH := 2099-12-31
 VENDOR_SECURITY_PATCH := 2099-12-31
 PLATFORM_VERSION := 16.1.0
 TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
 TW_USE_FSCRYPT_POLICY := 1
 
 # Additional binaries & libraries needed for recovery
@@ -161,6 +163,7 @@ TW_NO_SCREEN_BLANK := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_Y_OFFSET := 115
 TW_H_OFFSET := -115
+TW_DEVICE_VERSION := Realme-X7Pro
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
 TW_OZIP_DECRYPT_KEY := 0000
@@ -169,6 +172,7 @@ TW_INCLUDE_LOGICAL := my_product my_engineering my_company my_carrier my_region 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_LIBRESETPROP :=true
 
 # Debug
 TWRP_INCLUDE_LOGCAT := true
