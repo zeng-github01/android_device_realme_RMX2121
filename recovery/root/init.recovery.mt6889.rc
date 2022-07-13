@@ -34,17 +34,10 @@ service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
     seclabel u:r:recovery:s0
 
 
-service keystore_auth /system/bin/keystore_auth
-    oneshot
-    user system
-    group root
-    disabled
-    seclabel u:r:recovery:s0
-
 service keystore2 /system/bin/keystore2 /data/misc/keystore
-    user root
-    group root drmrpc readproc log
-    disabled
+    class early_hal
+    user keystore
+    group keystore readproc log
     seclabel u:r:recovery:s0
 
 # Start Daemon (Registry directories should already be present)
@@ -94,7 +87,9 @@ service keymaster-4-1 /system/bin/android.hardware.keymaster@4.1-service.truston
     disabled
     seclabel u:r:recovery:s0
 
-service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
+    class hal
     user root
     group root
     disabled
@@ -107,29 +102,51 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
+service hal_cryptoeng_oppo /system/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+    user root
+    group root input sdcard_rw sdcard_r
+    disabled
+    seclabel u:r:recovery:s0
+
 on property:hwservicemanager.ready=true
+    start hal_cryptoeng_oppo
     start mobicore
     start keymaster-4-1
-    start gatekeeper-1-0
+    start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop keymaster-4-1
-    stop gatekeeper-1-0
+    stop vendor.gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
 
 on property:ro.crypto.state=unencrypted
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop keymaster-4-1
-    stop gatekeeper-1-0
+    stop vendor.gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
 
+on property:ro.crypto.state=encrypted
+    stop mobicore
+    stop hal_cryptoeng_oppo
+    stop keymaster-4-1
+    stop vendor.gatekeeper-1-0
+    start hal_cryptoeng_oppo
+    start mobicore
+    start keystore2
+    start keymaster-4-1
+    start vendor.gatekeeper-1-0
+    
+
 on property:twrp.decrypt.done=true
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop keymaster-4-1
-    stop gatekeeper-1-0
+    stop vendor.gatekeeper-1-0
     stop servicemanager
     stop hwservicemanager
 
