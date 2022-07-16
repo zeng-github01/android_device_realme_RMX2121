@@ -10,28 +10,8 @@ on fs
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
-# We need vold early for metadata encryption
-on early-fs
-    start vold
-
-on late-fs
-    # Wait for keymaster
-    exec_start wait_for_keymaster
-
-# Mount RW partitions which need run fsck
-    mount_all /vendor/etc/fstab.mt6889 --late
-
 on post-fs
     start boot-1-1
-    start mtk.plpath.utils.link
-
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
 
 
 service keystore2 /system/bin/keystore2 /data/misc/keystore
@@ -95,13 +75,6 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     user root
     group root
     disabled
-    seclabel u:r:recovery:s0
-
-service wait_for_keymaster /system/bin/wait_for_keymaster
-    user root
-    group root system
-    priority -20
-    ioprio rt 0
     seclabel u:r:recovery:s0
 
 service hwservicemanager /system/bin/hwservicemanager
