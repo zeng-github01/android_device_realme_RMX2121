@@ -106,12 +106,6 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
-service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
-    user root
-    group root input sdcard_rw sdcard_r
-    disabled
-    seclabel u:r:recovery:s0
-
 service hwservicemanager /system/bin/hwservicemanager
     user root
     group root
@@ -129,25 +123,21 @@ on property:crypto.ready=1
     start vendor.keymaster-4-1-trustonic
 
 on property:hwservicemanager.ready=true
-    start hal_cryptoeng_oppo
     start mobicore
     start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
-    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
-    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=encrypted
-    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
@@ -172,8 +162,7 @@ on property:sys.usb.config=fastboot
 on post-fs-data
     mkdir /data/vendor_de 0770 system system
     mkdir /data/vendor_de/0 0770 system system
-    mkdir /data/vendor_de/0/cryptoeng 0770 system system
-
+    
 on boot
     start health-hal-2-1
     start mtk.plpath.utils.link
