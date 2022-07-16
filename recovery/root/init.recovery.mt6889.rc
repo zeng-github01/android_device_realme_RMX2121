@@ -20,7 +20,6 @@ on early-fs
 on late-fs
     # Wait for keymaster
     exec_start wait_for_keymaster
-    start keystore2
 
 # Mount RW partitions which need run fsck
     mount_all /vendor/etc/fstab.mt6889 --late
