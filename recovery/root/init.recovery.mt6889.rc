@@ -3,7 +3,6 @@ import /trustonic.rc
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    start hwservicemanager
 
 
 on fs
@@ -165,5 +164,4 @@ on post-fs-data
     
 on boot
     start health-hal-2-1
-    start mtk.plpath.utils.link
     setprop sys.usb.config adb
