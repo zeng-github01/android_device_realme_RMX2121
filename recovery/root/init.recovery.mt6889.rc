@@ -3,44 +3,27 @@ import /trustonic.rc
 
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    start hwservicemanager
-
 
 on fs
     install_keyring
-    setprop crypto.ready 1
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
-# We need vold early for metadata encryption
-on early-fs
-    start vold
-
-on late-fs
-    # Wait for keymaster
-    exec_start wait_for_keymaster
-
-# Mount RW partitions which need run fsck
-    mount_all /vendor/etc/fstab.mt6889 --late
-
 on post-fs
-    start boot-1-1
-    start mtk.plpath.utils.link
+    start boot-hal-1-1
 
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
+on post-fs-data
+    mkdir /data/vendor_de 0770 system system
+    mkdir /data/vendor_de/0 0770 system system
 
+on boot
+    start health-hal-2-1
+    setprop sys.usb.config adb
 
-service keystore2 /system/bin/keystore2 /data/misc/keystore
-    class early_hal
-    user keystore
-    group keystore readproc log
-    seclabel u:r:recovery:s0
+on property:vendor.sys.listeners.registered=true
+    start mobicore
+    start vendor.keymaster-4-1-trustonic
+    start vendor.gatekeeper-1-0
 
 # Start Daemon (Registry directories should already be present)
 service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/persist/mcRegistry \
@@ -86,6 +69,8 @@ service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/pers
     seclabel u:r:recovery:s0
 
 service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster@4.1-service.trustonic
+    interface android.hardware.keymaster@4.0::IKeymasterDevice default
+    interface android.hardware.keymaster@4.1::IKeymasterDevice default
     class early_hal
     user root
     group root drmrpc
@@ -93,77 +78,10 @@ service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster
     seclabel u:r:recovery:s0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
     class hal
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
 
-service wait_for_keymaster /system/bin/wait_for_keymaster
-    user root
-    group root system
-    priority -20
-    ioprio rt 0
-    seclabel u:r:recovery:s0
-
-service hwservicemanager /system/bin/hwservicemanager
-    user root
-    group root
-    disabled
-    onrestart setprop hwservicemanager.ready false
-    seclabel u:r:recovery:s0
-    
-service servicemanager /system/bin/servicemanager
-    user root
-    group root readproc
-    disabled
-    seclabel u:r:recovery:s0
-
-on property:crypto.ready=1
-    start vendor.keymaster-4-1-trustonic
-
-on property:hwservicemanager.ready=true
-    start mobicore
-    start vendor.keymaster-4-1-trustonic
-    start vendor.gatekeeper-1-0
-
-on property:ro.crypto.state=unsupported
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-
-on property:ro.crypto.state=unencrypted
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-
-on property:ro.crypto.state=encrypted
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-    
-
-on property:twrp.decrypt.done=true
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-
-on property:crypto.ready=0
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-    stop servicemanager
-
-on property:sys.usb.config=fastboot
-    start servicemanager
-    start hwservicemanager
-    restart fastbootd
-
-on post-fs-data
-    mkdir /data/vendor_de 0770 system system
-    mkdir /data/vendor_de/0 0770 system system
-    
-on boot
-    start health-hal-2-1
-    start mtk.plpath.utils.link
-    setprop sys.usb.config adb
