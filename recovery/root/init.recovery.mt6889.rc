@@ -7,7 +7,6 @@ on init
 
 on fs
     install_keyring
-    setprop crypto.ready 1
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
@@ -117,9 +116,6 @@ service servicemanager /system/bin/servicemanager
     group root readproc
     disabled
     seclabel u:r:recovery:s0
-
-on property:crypto.ready=1
-    start vendor.keymaster-4-1-trustonic
 
 on property:hwservicemanager.ready=true
     start mobicore
