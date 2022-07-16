@@ -4,12 +4,11 @@ import /trustonic.rc
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     start hwservicemanager
-    setprop crypto.ready 1
 
 
 on fs
     install_keyring
-
+    setprop crypto.ready 1
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
@@ -107,6 +106,12 @@ service wait_for_keymaster /system/bin/wait_for_keymaster
     ioprio rt 0
     seclabel u:r:recovery:s0
 
+service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+    user root
+    group root input sdcard_rw sdcard_r
+    disabled
+    seclabel u:r:recovery:s0
+
 service hwservicemanager /system/bin/hwservicemanager
     user root
     group root
@@ -124,21 +129,25 @@ on property:crypto.ready=1
     start vendor.keymaster-4-1-trustonic
 
 on property:hwservicemanager.ready=true
+    start hal_cryptoeng_oppo
     start mobicore
     start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=encrypted
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
