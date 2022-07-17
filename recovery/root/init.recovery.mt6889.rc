@@ -64,6 +64,8 @@ service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/pers
     seclabel u:r:recovery:s0
 
 service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster@4.1-service.trustonic
+    interface android.hardware.keymaster@4.0::IKeymasterDevice default
+    interface android.hardware.keymaster@4.1::IKeymasterDevice default
     class early_hal
     user root
     group root drmrpc
@@ -71,11 +73,17 @@ service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster
     seclabel u:r:recovery:s0
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
+    interface android.hardware.gatekeeper@1.0::IGatekeeper default
     class hal
     user root
     group root
     disabled
     seclabel u:r:recovery:s0
+
+on property:vendor.sys.listeners.registered=true
+    start mobicore
+    start vendor.keymaster-4-1-trustonic
+    start vendor.gatekeeper-1-0
 
 on property:hwservicemanager.ready=true
     start mobicore
