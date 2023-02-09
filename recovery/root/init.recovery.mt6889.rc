@@ -5,11 +5,11 @@ on init
 
 # We need vold early for metadata encryption
 on early-fs
-    start vold
+    #start vold
 
 on late-fs
     # Wait for keymaster
-    exec_start wait_for_keymaster
+   # exec_start wait_for_keymaster
 
 on fs
     install_keyring
@@ -18,21 +18,21 @@ on fs
 
 on post-fs
     start boot-1-1
-    start mtk.plpath.utils.link
+    // start mtk.plpath.utils.link
 
-service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
-    class main
-    user root
-    group root system
-    oneshot
-    disabled
-    seclabel u:r:recovery:s0
+#service mtk.plpath.utils.link /system/bin/mtk_plpath_utils
+#     class main
+#    user root
+#     group root system
+#     oneshot
+#     disabled
+#     seclabel u:r:recovery:s0
 
-service keystore2 /system/bin/keystore2 /data/misc/keystore
-    class early_hal
-    user keystore
-    group keystore readproc log
-    seclabel u:r:recovery:s0
+# service keystore2 /system/bin/keystore2 /data/misc/keystore
+#     class early_hal
+#    user keystore
+#     group keystore readproc log
+#     seclabel u:r:recovery:s0 
 
 # Start Daemon (Registry directories should already be present)
 service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry \
@@ -63,17 +63,16 @@ service mobicore /vendor/bin/mcDriverDaemon --P1 /mnt/vendor/persist/mcRegistry 
     disabled
     seclabel u:r:recovery:s0
 
-service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+/* service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
     user root
     group root input sdcard_rw sdcard_r
     disabled
-    seclabel u:r:recovery:s0
+    seclabel u:r:recovery:s0 */
 
 
 service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster@4.1-service.trustonic
     interface android.hardware.keymaster@4.0::IKeymasterDevice default
     interface android.hardware.keymaster@4.1::IKeymasterDevice default
-    class early_hal
     user root
     group root drmrpc
     disabled
@@ -81,7 +80,6 @@ service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster
 
 service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service
     interface android.hardware.gatekeeper@1.0::IGatekeeper default
-    class hal
     user root
     group root
     disabled
@@ -92,22 +90,26 @@ on property:vendor.sys.listeners.registered=true
     start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
-on property:hwservicemanager.ready=true
+/* on property:hwservicemanager.ready=true
+    start hal_cryptoeng_oppo
     start mobicore
     start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unsupported
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=unencrypted
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
 
 on property:ro.crypto.state=encrypted
+    stop hal_cryptoeng_oppo
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
@@ -122,7 +124,7 @@ on property:crypto.ready=0
     stop mobicore
     stop vendor.keymaster-4-1-trustonic
     stop vendor.gatekeeper-1-0
-    stop servicemanager
+    stop servicemanager */
 
 on property:sys.usb.config=fastboot
     start servicemanager
