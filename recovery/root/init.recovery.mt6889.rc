@@ -17,7 +17,7 @@ on fs
     write /sys/class/oplus_chg/usb/otg_switch 1
 
 on post-fs
-    start boot-1-1
+    start boot-hal-1-2
 
 
 
@@ -63,11 +63,11 @@ service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/pers
     disabled
     seclabel u:r:recovery:s0
 
- service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
-    user root
-    group root input sdcard_rw sdcard_r
-    disabled
-    seclabel u:r:recovery:s0 
+//  service hal_cryptoeng_oppo /vendor/bin/hw/vendor.oplus.hardware.cryptoeng@1.0-service
+//     user root
+//     group root input sdcard_rw sdcard_r
+//     disabled
+//     seclabel u:r:recovery:s0 
 
 
 service vendor.keymaster-4-1-trustonic /vendor/bin/hw/android.hardware.keymaster@4.1-service.trustonic
@@ -86,56 +86,56 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     seclabel u:r:recovery:s0
 
 on property:vendor.sys.listeners.registered=true
-    start hal_cryptoeng_oppo
+    //start hal_cryptoeng_oppo
     start mobicore
     start vendor.keymaster-4-1-trustonic
     start vendor.gatekeeper-1-0
 
-/* on property:hwservicemanager.ready=true
-    start hal_cryptoeng_oppo
-    start mobicore
-    start vendor.keymaster-4-1-trustonic
-    start vendor.gatekeeper-1-0
+//  on property:hwservicemanager.ready=true
+//     start hal_cryptoeng_oppo
+//     start mobicore
+//     start vendor.keymaster-4-1-trustonic
+//     start vendor.gatekeeper-1-0
 
-on property:ro.crypto.state=unsupported
-    stop hal_cryptoeng_oppo
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
+// on property:ro.crypto.state=unsupported
+//     stop hal_cryptoeng_oppo
+//     stop mobicore
+//     stop vendor.keymaster-4-1-trustonic
+//     stop vendor.gatekeeper-1-0
 
-on property:ro.crypto.state=unencrypted
-    stop hal_cryptoeng_oppo
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
+// on property:ro.crypto.state=unencrypted
+//     stop hal_cryptoeng_oppo
+//     stop mobicore
+//     stop vendor.keymaster-4-1-trustonic
+//     stop vendor.gatekeeper-1-0
 
-on property:ro.crypto.state=encrypted
-    stop hal_cryptoeng_oppo
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
+// on property:ro.crypto.state=encrypted
+//     stop hal_cryptoeng_oppo
+//     stop mobicore
+//     stop vendor.keymaster-4-1-trustonic
+//     stop vendor.gatekeeper-1-0
     
 
-on property:twrp.decrypt.done=true
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
+// on property:twrp.decrypt.done=true
+//     stop mobicore
+//     stop vendor.keymaster-4-1-trustonic
+//     stop vendor.gatekeeper-1-0
 
-on property:crypto.ready=0
-    stop mobicore
-    stop vendor.keymaster-4-1-trustonic
-    stop vendor.gatekeeper-1-0
-    stop servicemanager 
+// on property:crypto.ready=0
+//     stop mobicore
+//     stop vendor.keymaster-4-1-trustonic
+//     stop vendor.gatekeeper-1-0
+//     stop servicemanager 
 
-on property:sys.usb.config=fastboot
-    start servicemanager
-    start hwservicemanager
-    restart fastbootd
+// on property:sys.usb.config=fastboot
+//     start servicemanager
+//     start hwservicemanager
+//     restart fastbootd
 
-on post-fs-data
-    mkdir /data/vendor_de 0770 system system
-    mkdir /data/vendor_de/0 0770 system system
-    mkdir /data/vendor_de/0/cryptoeng 0770 system system
+// on post-fs-data
+//     mkdir /data/vendor_de 0770 system system
+//     mkdir /data/vendor_de/0 0770 system system
+//     mkdir /data/vendor_de/0/cryptoeng 0770 system system
     
 on boot
     start health-hal-2-1
