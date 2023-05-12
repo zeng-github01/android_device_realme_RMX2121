@@ -19,6 +19,9 @@
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # fastbootd
+
+TW_INCLUDE_FASTBOOTD := true
+
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
     android.hardware.fastboot@1.0-impl-mock.recovery \
@@ -31,8 +34,8 @@ PRODUCT_PACKAGES += \
 
 # Boot control HAL
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.2-mtkimpl \
-    android.hardware.boot@1.2-mtkimpl.recovery
+    android.hardware.boot@1.1-mtkimpl \
+    android.hardware.boot@1.1-mtkimpl.recovery
 
 # Drm
 PRODUCT_PACKAGES += \
