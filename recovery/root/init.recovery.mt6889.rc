@@ -124,10 +124,10 @@ on property:vendor.sys.listeners.registered=true
 //     stop vendor.gatekeeper-1-0
 //     stop servicemanager 
 
-// on property:sys.usb.config=fastboot
-//     start servicemanager
-//     start hwservicemanager
-//     restart fastbootd
+on property:sys.usb.config=fastboot
+    start servicemanager
+    start hwservicemanager
+    restart fastbootd
 
 // on post-fs-data
 //     mkdir /data/vendor_de 0770 system system
