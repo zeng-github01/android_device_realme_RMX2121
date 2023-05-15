@@ -111,11 +111,6 @@ jobs:
         repo sync -j$(nproc --all) --force-sync
       working-directory: workspace
       
-    - name: Reset
-      run: |
-        repo forall -c 'ID=`Git log --before="2022-07-20" -1 --pretty=format:"%H"`; git reset --hard $ID'
-      working-directory: workspace
-      
     - name: Clone device tree
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
@@ -152,7 +147,6 @@ jobs:
     - name: Building recovery
       run: |
         source build/envsetup.sh
-        repopick -f 6297
         export ALLOW_MISSING_DEPENDENCIES=true
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
