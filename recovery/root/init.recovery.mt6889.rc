@@ -17,7 +17,7 @@ on fs
     write /sys/class/oplus_chg/usb/otg_switch 1
 
 on post-fs
-    start boot-hal-1-1
+    //  start boot-hal-1-1
 
 # Start Daemon (Registry directories should already be present)
 service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/persist/mcRegistry \
