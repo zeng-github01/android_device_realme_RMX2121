@@ -32,19 +32,11 @@ PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
 
-# Boot control HAL
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.1-mtkimpl \
-    android.hardware.boot@1.1-mtkimpl.recovery
 
 # Drm
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.4
 
-# # Build MT-PL-Utils
-# PRODUCT_PACKAGES += \
-#     mtk_plpath_utils \
-#     mtk_plpath_utils.recovery
 
 # Keystore
 PRODUCT_PACKAGES += \
