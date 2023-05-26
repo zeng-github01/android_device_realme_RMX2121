@@ -5,7 +5,7 @@ Working:fastbootd
         adb
         otg
         mtp
-        data decryption(without password)
+        data decryption
 
-Not Working: data decryption(with password)
+Not Working: fastbootd
 
