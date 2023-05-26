@@ -108,4 +108,3 @@ on property:sys.usb.config=fastboot
     
 on boot
     start health-hal-2-1
-    setprop sys.usb.config adb
