@@ -1,7 +1,7 @@
 # TWRP device tree for Realme X7 Pro
 
 # Status
-Working:fastbootd
+Working:
         adb
         otg
         mtp
