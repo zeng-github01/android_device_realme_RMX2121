@@ -36,7 +36,7 @@ load_RMX2121IN()
       resetprop "ro.product.name" "RMX2121"      
       resetprop "ro.product.model" "RMX2121"
       resetprop "ro.product.product.model" "RMX2121"
-      resetprop "ro.separate.soft" "20603"
+      resetprop "ro.separate.soft" "20660"
       resetprop "ro.vendor.product.device.oem" "RMX2121"
       rm -rf /vendor/firmware/aw8697_haptic_170.bin
       rm -rf /vendor/firmware/aw8697_haptic_235.bin
@@ -55,7 +55,7 @@ case $prjName in
      "20602")
          load_RMX2121
               ;;
-     "20603")
+     "20660")
           load_RMX2121IN
               ;;
 esac
