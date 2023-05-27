@@ -148,10 +148,10 @@ jobs:
       run: |
         source build/envsetup.sh
         export ALLOW_MISSING_DEPENDENCIES=true
-        repopick 5743
+        repopick 5639
         repopick 5690
         repopick 5691
-        repopick 5639
+        repopick 5743
         lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
