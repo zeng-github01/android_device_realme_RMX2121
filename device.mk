@@ -19,8 +19,7 @@
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # fastbootd
-
-# TW_INCLUDE_FASTBOOTD := true
+TW_INCLUDE_FASTBOOTD := true
 
 # PRODUCT_PACKAGES += \
 #     android.hardware.fastboot@1.1-impl-mock \
