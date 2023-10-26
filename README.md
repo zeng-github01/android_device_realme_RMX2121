@@ -5,8 +5,8 @@
 | Spec | Value |
 |---|---|
 | Display | 6.55-inch Super AMOLED display |
-| Processor | MediaTek Dimensity 1200 |
-| RAM | 8GB/12GB |
+| Processor | MediaTek Dimensity 1000 + |
+| RAM | 8GB |
 | Storage | 128GB/256GB |
 | Camera | 64MP main camera, 8MP ultrawide camera, 2MP macro camera |
 | Battery | 4500mAh |
