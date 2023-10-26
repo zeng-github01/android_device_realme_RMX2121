@@ -2,7 +2,7 @@
 
 # Specifications
 
-| Spec | Value |
+| Basic | Spec Sheet |
 |---|---|
 | Display | 6.55-inch Super AMOLED display |
 | Processor | MediaTek Dimensity 1000 + |
