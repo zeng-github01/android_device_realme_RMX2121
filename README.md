@@ -12,7 +12,7 @@
 | Battery | 4500mAh |
 | Operating System | Android 10, upgradable to Android 12 |
 
-[![Realme X7 Pro](https://static.realme.net/videos/pic/x7-pro/cn/dazzle.png)](https://static.realme.net/videos/pic/x7-pro/cn/dazzle.png)
+![Realme X7 Pro](https://static.realme.net/videos/pic/x7-pro/cn/dazzle.png)
 
 # Status
 
