@@ -21,8 +21,6 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# fastbootd
-# TW_INCLUDE_FASTBOOTD := true
 
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.0-impl-mock \
@@ -45,3 +43,9 @@ PRODUCT_PACKAGES += \
 # Keymaster
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1
+
+# Boot Control
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.0-service \
+    android.hardware.boot@1.0-impl \
+    android.hardware.boot@1.0-impl.recovery
