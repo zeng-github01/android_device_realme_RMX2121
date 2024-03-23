@@ -177,7 +177,6 @@ TW_DEVICE_VERSION := Realme-X7Pro
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
 TW_OZIP_DECRYPT_KEY := 0000
-# TW_INCLUDE_LOGICAL := my_product my_engineering my_company my_carrier my_region my_heytap my_stock my_preload my_manifest my_bigball
 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
