@@ -3,21 +3,12 @@ import /tee.rc
 on init
     export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
 
-# We need vold early for metadata encryption
-on early-fs
-	# start vold
-
-on late-fs
-    # Wait for keymaster
-   # exec_start wait_for_keymaster
-
 on fs
     install_keyring
     write /sys/class/power_supply/usb/otg_switch 1
     write /sys/class/oplus_chg/usb/otg_switch 1
 
 on post-fs
-    #  start boot-hal-1-1
 
 # Start Daemon (Registry directories should already be present)
 service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/persist/mcRegistry \
