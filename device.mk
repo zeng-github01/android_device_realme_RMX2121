@@ -44,7 +44,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.keymaster@4.1
 
-# Boot Control
+# Bootctrl
 PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-mtkimpl \
-    android.hardware.boot@1.0-mtkimpl.recovery
+    android.hardware.boot@1.2-mtkimpl \
+    android.hardware.boot@1.2-mtkimpl.recovery
+
+PRODUCT_PACKAGES_DEBUG += \
+    bootctrl
