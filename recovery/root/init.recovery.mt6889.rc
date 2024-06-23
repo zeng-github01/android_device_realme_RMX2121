@@ -7,6 +7,7 @@ on fs
     install_keyring
 
 on post-fs
+    start boot-hal-1-1
 
 # Start Daemon (Registry directories should already be present)
 service mobicore /vendor/bin/mcDriverDaemon --sfs-reformat --P1 /mnt/vendor/persist/mcRegistry \
