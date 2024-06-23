@@ -28,7 +28,14 @@
 on early-init
     setprop sys.usb.configfs 0
 
-on fs && property:sys.usb.configfs=1
+on fs
+    mkdir /dev/usb-ffs 0775 shell shell
+    mkdir /dev/usb-ffs/adb 0770 shell shell
+    write /sys/class/power_supply/usb/otg_switch 1
+    write /sys/class/oplus_chg/usb/otg_switch 1
+    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
+    mkdir /dev/usb-ffs/fastboot 0770 system system
+    mount functionfs fastboot /dev/usb-ffs/fastboot rmode=0770,fmode=0660,uid=1000,gid=1000
     mkdir /config
     mount configfs none /config
     mkdir /config/usb_gadget/g1 0770 shell shell
@@ -41,22 +48,12 @@ on fs && property:sys.usb.configfs=1
     mkdir /config/usb_gadget/g1/functions/ffs.fastboot
     mkdir /config/usb_gadget/g1/configs/b.1 0777 shell shell
     mkdir /config/usb_gadget/g1/configs/b.1/strings/0x409 0770 shell shell
-
-on fs && property:sys.usb.configfs=0
     write /sys/class/android_usb/android0/f_ffs/aliases adb,fastboot
     write /sys/class/android_usb/android0/idVendor 18D1
     write /sys/class/android_usb/android0/iManufacturer ${ro.product.manufacturer}
     write /sys/class/android_usb/android0/iProduct ${ro.product.model}
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
-
-on fs
-    mkdir /dev/usb-ffs 0775 shell shell
-    mkdir /dev/usb-ffs/adb 0770 shell shell
-    write /sys/class/power_supply/usb/otg_switch 1
-    write /sys/class/oplus_chg/usb/otg_switch 1
-    mount functionfs adb /dev/usb-ffs/adb uid=2000,gid=2000
-    mkdir /dev/usb-ffs/fastboot 0770 system system
-    mount functionfs fastboot /dev/usb-ffs/fastboot rmode=0770,fmode=0660,uid=1000,gid=1000
+    setprop sys.usb.configfs 1
 
 on property:sys.usb.config=adb
     start adbd
@@ -65,8 +62,6 @@ on property:sys.usb.config=adb
 
 on property:sys.usb.config=fastboot
     start fastbootd
-    setprop sys.usb.configfs 1
-
 
 on property:sys.usb.config=none && property:sys.usb.configfs=1
     write /config/usb_gadget/g1/UDC "none"
