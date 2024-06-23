@@ -21,9 +21,6 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-# Fastbootd
-TW_INCLUDE_FASTBOOTD := true
-
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \

@@ -158,6 +158,7 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hardware.keymaster@4.1.so
 
 # TWRP specific build flags
+TW_NO_FASTBOOT_BOOT := true
 TW_FRAMERATE := 60
 TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
@@ -176,7 +177,6 @@ TW_H_OFFSET := -115
 TW_DEVICE_VERSION := Realme-X7Pro
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
-TW_OZIP_DECRYPT_KEY := 0000
 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
