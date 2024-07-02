@@ -29,19 +29,11 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock.recovery \
     fastbootd
 
-# Boot Control HAL
-PRODUCT_PACKAGES += \
-    android.hardware.boot@1.0-mtkimpl.recovery \
-    android.hardware.boot@1.0-mtkimpl \
-    bootctl
-
-PRODUCT_PACKAGES_DEBUG += \
-    bootctrl.mt6889
-
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
+    android.hardware.health@2.1-service \
+    android.hardware.health@2.1-impl.recovery
 
 # Drm
 PRODUCT_PACKAGES += \
