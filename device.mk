@@ -21,6 +21,23 @@ PRODUCT_SHIPPING_API_LEVEL := 29
 # Dynamic
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# Fastbootd stuff
+PRODUCT_PACKAGES += \
+    android.hardware.fastboot@1.0-impl-mtk \
+    android.hardware.fastboot@1.0-impl-mtk.recovery \
+    android.hardware.fastboot@1.1-impl-mock \
+    android.hardware.fastboot@1.1-impl-mock.recovery \
+    fastbootd
+
+# Boot Control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.0-mtkimpl.recovery \
+    android.hardware.boot@1.0-mtkimpl \
+    bootctl
+
+PRODUCT_PACKAGES_DEBUG += \
+    bootctrl.mt6889
+
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
