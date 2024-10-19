@@ -22,5 +22,5 @@
 | otg | Working |
 | mtp | Working |
 | data decryption | Working |
-| fastbootd | Not Working |
+| fastbootd | Working |
 
