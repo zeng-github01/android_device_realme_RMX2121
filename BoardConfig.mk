@@ -147,6 +147,7 @@ TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libashmemd_client.so  
 
 # TWRP specific build flags
+TW_FRAMERATE := 60
 TW_THEME := portrait_hdpi
 RECOVERY_SDCARD_ON_DATA := true
 TW_EXCLUDE_DEFAULT_USB_INIT := true
@@ -163,12 +164,13 @@ TW_Y_OFFSET := 115
 TW_H_OFFSET := -115
 TARGET_USES_MKE2FS := true
 TW_EXCLUDE_TWRPAPP := true
-TW_OZIP_DECRYPT_KEY := 0000
-TW_INCLUDE_LOGICAL := my_product my_engineering my_company my_carrier my_region my_heytap my_stock my_preload my_manifest my_bigball
+TW_DEVICE_VERSION := Realme-X7Pro
+TW_INCLUDE_FASTBOOTD := true
 
 # resetprop and magiskboot
 TW_INCLUDE_RESETPROP := true
 TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_LIBRESETPROP :=true
 
 # Debug
 TWRP_INCLUDE_LOGCAT := true
