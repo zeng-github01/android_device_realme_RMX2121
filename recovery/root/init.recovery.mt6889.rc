@@ -25,13 +25,6 @@ service vendor.gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-ser
     disabled
     seclabel u:r:recovery:s0
 
-service init-device /system/bin/init-device.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0    
-
 on property:hwservicemanager.ready=true
     start mobicore
     start vendor.keymaster-4-1-trustonic
@@ -66,5 +59,3 @@ on property:sys.usb.config=fastboot
 on boot
     start health-hal-2-1
     setprop sys.usb.config adb
-    chmod 0777 /system/bin/init-device.sh
-    start init-device
